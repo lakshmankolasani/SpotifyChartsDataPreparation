@@ -1,8 +1,8 @@
 # importing spotipy libary and authenticating client
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
-client_id ="5564770c4c394b008b69b53bc3ed9193" 
-client_secret = "e3bd5bf6b61b472f8ba2efc80faf1da4"
+client_id ="{Insert your ID}" 
+client_secret = "{Insert your secret key}"
 client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
@@ -45,7 +45,7 @@ for i in range(0,len(df_tracks['track_id']),batchsize):
             rows.append(t)
 
 print('Number of tracks with no audio features:', nullvalues)
-# Creating Audio features dataframe from the lists
+# Creating required Audio features dataframe from the lists
 df_audio_features = pd.DataFrame.from_dict(rows,orient='columns')
 columns_to_drop = ['analysis_url','track_href','type','key','mode','type','time_signature']
 df_audio_features.drop(columns_to_drop, axis=1,inplace=True)
@@ -61,15 +61,17 @@ df.info()
 #Drop any duplicated rows
 df[df.duplicated(subset=['artist_name','track_name'],keep=False)]
 
-#Save the file with top tracks and audio features
+#Save the final file with top tracks and audio features
 df.to_csv('SpotifyAudioFeatures.csv', index=False)
+del df
 
 
-## Download last 3 weeks Daily global Charts from https://spotifycharts.com/regional/global/daily/latest/ to directory
+# Download last 3 weeks Daily global Charts from https://spotifycharts.com/regional/global/daily/latest/ to directory
 # #Merging Top 200 Charts 10/1/19 to 10/19/19
-# from os import listdir
-# directory = "/Users"
-# filepaths = [f for f in listdir(directory) if f.endswith('.csv')]
-# filepaths.sort()
-# df = pd.concat(map(pd.read_csv, filepaths))
-# df.to_csv(directory+"/regional-global-daily.csv", index=False)
+from os import listdir
+directory = "/Users"
+filepaths = [f for f in listdir(directory) if f.endswith('.csv')]
+filepaths.sort()
+df = pd.concat(map(pd.read_csv, filepaths))
+df.to_csv(directory+"/regional-global-daily.csv", index=False)
+del df
