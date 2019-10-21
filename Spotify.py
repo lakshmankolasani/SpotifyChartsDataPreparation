@@ -6,14 +6,12 @@ client_secret = "{Insert your secret key}"
 client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
-
 #### Getting Spotify catalog information for tracks ####
 # create empty lists to store the results
 track_id = []
 track_name = []
 artist_name = []
 popularity = []
-
 for i in range(0,10,10):
     track_results = sp.search(q='year:2019', type='track', limit=10,offset=i)
     for i, t in enumerate(track_results['tracks']['items']):
@@ -22,7 +20,6 @@ for i in range(0,10,10):
         artist_name.append(t['artists'][0]['name'])
         popularity.append(t['popularity'])
 
-#### Data Preparation and Analysis ####
 # Creating Top Tracks dataframe from the lists
 import pandas as pd
 df_tracks = pd.DataFrame({'track_name':track_name,'track_id':track_id,'artist_name':artist_name,'popularity':popularity})
@@ -30,8 +27,7 @@ print(df_tracks.shape)
 df_tracks.head()
 df_tracks.shape
 
-##### Get audio feature information for tracks ####
-# empty list, batchsize and the counter for None results
+##### Getting audio feature information for tracks ####
 rows = []
 batchsize = 10
 nullvalues = 0
@@ -64,7 +60,6 @@ df[df.duplicated(subset=['artist_name','track_name'],keep=False)]
 #Save the final file with top tracks and audio features
 df.to_csv(directory+"SpotifyAudioFeatures.csv", index=False)
 del df
-
 
 # Download last 3 weeks Daily global Charts from https://spotifycharts.com/regional/global/daily/latest/ to directory
 # #Merging Top 200 Charts 10/1/19 to 10/19/19
