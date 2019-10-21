@@ -62,7 +62,7 @@ df.info()
 df[df.duplicated(subset=['artist_name','track_name'],keep=False)]
 
 #Save the final file with top tracks and audio features
-df.to_csv('SpotifyAudioFeatures.csv', index=False)
+df.to_csv(directory+"SpotifyAudioFeatures.csv", index=False)
 del df
 
 
