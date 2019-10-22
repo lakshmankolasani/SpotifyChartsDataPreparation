@@ -1,4 +1,4 @@
-# Data Preparation for Tableau dashboard that shows an overview of Top 10 Tracks from Spotify Global Charts Charts
+# Data Preparation for Spotify Top 10 Global Charts Dashboard
 
 The Dashboard was designed with Data mined using Spotipy, a lightweight Python library for Spotify Web API, on 10/20/2019. 
 
